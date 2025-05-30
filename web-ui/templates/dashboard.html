@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="it">
+<head><title>Dashboard - Assessment OCS</title></head>
+<body>
+  <h2>Dashboard</h2>
+  <a href="{{ url_for('generate_report') }}">Genera Report</a> |
+  <a href="{{ url_for('download_report') }}">Scarica Report</a> |
+  <a href="{{ url_for('logout') }}">Logout</a>
+  <h3>Log attività</h3>
+  <pre>
+  {% for line in logs %}
+  {{ line }}
+  {% endfor %}
+  </pre>
+</body>
+</html>
