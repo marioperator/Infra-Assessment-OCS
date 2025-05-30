@@ -1,0 +1,20 @@
+# Node modules
+node_modules/
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Docker files
+*.log
+*.env
+
+# VSCode settings (se usi VSCode)
+.vscode/
+
+# Files di sistema
+.DS_Store
+Thumbs.db
+
+# Archivi generati
+*.zip
