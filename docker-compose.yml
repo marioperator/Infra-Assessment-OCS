@@ -1,0 +1,61 @@
+version: "3"
+
+services:
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    restart: always
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+
+  report-worker:
+    build: ./report-worker
+    container_name: report-worker
+    restart: always
+    depends_on:
+      - ollama
+      - ocsinventory-db
+    environment:
+      OCS_DB_SERVER: ocsinventory-db
+      OCS_DB_USER: ocsuser
+      OCS_DB_PASS: ocspass
+      OCS_DB_NAME: ocsweb
+    networks:
+      - localocs
+
+  web-ui:
+    build: ./web-ui
+    container_name: web-ui
+    restart: always
+    ports:
+      - "5001:5001"
+    depends_on:
+      - report-worker
+    environment:
+      FLASK_ENV: development
+    networks:
+      - localocs
+
+  ocsinventory-db:
+    image: mysql:8.0
+    container_name: ocsinventory-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_USER: ocsuser
+      MYSQL_PASSWORD: ocspass
+      MYSQL_DATABASE: ocsweb
+    volumes:
+      - sqldata:/var/lib/mysql
+    networks:
+      - localocs
+
+networks:
+  localocs:
+
+volumes:
+  ollama_data:
+  sqldata:

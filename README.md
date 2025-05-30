@@ -1,46 +1,33 @@
 # Infra-Assessment-OCS
 
-Infra-Assessment-OCS è una soluzione containerizzata per generare automaticamente report formali di assessment infrastrutturale IT basati sui dati raccolti da un server OCS Inventory NG.  
-La soluzione integra:
+Infra-Assessment-OCS è una soluzione containerizzata per generare automaticamente report formali di assessment infrastrutturale IT basati sui dati raccolti da un server OCS Inventory NG.
 
-- Accesso diretto al database MySQL di OCS Inventory NG per estrarre inventario e dati infrastrutturali
-- Utilizzo di Ollama AI (modello Mistral) per generare analisi e raccomandazioni in linguaggio naturale
-- Web UI con autenticazione per generare, visualizzare e scaricare report in formato `.docx`
-- Storicizzazione delle richieste di report con log e gestione utenti base
-- Docker Compose per facilitare l’installazione e gestione di tutti i servizi
+## Componenti
 
-## Architettura
+- OCS Inventory NG (MySQL DB e Server esistenti)
+- Ollama AI container per generazione linguaggio naturale
+- Report Worker Python per estrazione dati e generazione report Word
+- Web UI Flask con login e log attività
 
-- `ocsinventory-server` e `ocsinventory-db` (esistenti)
-- `ollama` (container AI locale)
-- `report-worker` (estrae dati e genera report Word)
-- `web-ui` (Flask app per UI e autenticazione)
+## Avvio
 
-## Come usare
+```bash
+docker-compose up -d
+```
 
-1. Clona il repository
-2. Configura `.env` con credenziali OCS e utente web
-3. Avvia con `docker-compose up -d`
-4. Accedi a `http://localhost:5001` (default admin/changeme)
-5. Genera e scarica report
+Accesso Web UI: `http://localhost:5001`  
+Utente default: admin / changeme
+
+## Personalizzazione
+
+Modifica `.env` per cambiare credenziali e configurazioni DB e UI.
 
 ## Requisiti
 
-- Docker e Docker Compose
-- OCS Inventory NG funzionante
-- Connessione tra stack tramite rete Docker `localocs`
-- Ollama AI image (preinstallata o scaricata al primo avvio)
+- Docker e Docker Compose installati
+- OCS Inventory NG attivo e accessibile
+- Porta 5001 aperta per la UI
 
----
-
-## Estensioni future
-
-- Output PDF
-- Report multipli e schedulazione automatica
-- Integrazione con altri sistemi CMDB o CM Tools
-
----
-
-### License
+## Licenza
 
 MIT License
